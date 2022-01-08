@@ -1,3 +1,5 @@
-# dotfiles
-# dotfiles
-# dotfiles
+## My Dotfiles
+
+### Powershell
+* user profile for terminal
+* terminal settings json
