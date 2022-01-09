@@ -1,5 +1,18 @@
 ## My Dotfiles
 
+### Bash
+* bash_alias (windows)
+* .bashrc (windows)]
+
+### Git
+* .gitconfig (windows)
+* .gitignore
+
+
+### Keyboard layout
+* colemak auto hotkey config
+* My layout snapshot
+
 ### Powershell
 * user profile for terminal
 * terminal settings json
