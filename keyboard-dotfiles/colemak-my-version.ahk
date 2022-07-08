@@ -33,5 +33,5 @@ SC032::h
 ; set Backspace to CapsLock key
 SC03a::backspace
 ;
-; set CapsLock key to backspace
+; set CapsLock key to backspace key
 SC00E::CapsLock
