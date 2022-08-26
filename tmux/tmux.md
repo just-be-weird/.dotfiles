@@ -14,6 +14,38 @@ tmux attach
 tmux a
 ```
 
+### Installing the Tmux Plugin Manager
+```shell
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+```
+
+Put this at the bottom of `~/.tmux.conf`
+```shell
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run '~/.tmux/plugins/tpm/tpm'
+```
+
+### Reload TMUX environment so TPM is sourced:
+Type this in terminal if tmux is already running
+```shell
+tmux source ~/.tmux.conf
+```
+
+### Installing plugins
+1. Add new plugin to `~/.tmux.conf` with `set -g @plugin '...'`
+2. Press `prefix + I` (capital i, as in Install) to fetch the plugin.
+
+You're good to go! The plugin was cloned to` ~/.tmux/plugins/` dir and sourced.
+
+### Uninstalling plugins
+1. Remove (or comment out) plugin from the list.
+2. Press `prefix + alt + u` (lowercase u as in uninstall) to remove the plugin.
+
+All the plugins are installed to ~/.tmux/plugins/ so alternatively you can find plugin directory there and remove it.
+
+---
 ## Panes in Tmux
 #### Horizontal and vertical panes
 Tmux prefix to trigger tmux to listen our commands. Default keybinding is `ctrl + b`.
