@@ -10,7 +10,6 @@ postgres=# \password postgres
 Enter new password: <new-password>
 postgres=# \q
 ```
-    
 
 ### Using a query:
 ```shell
