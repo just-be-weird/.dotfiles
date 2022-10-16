@@ -14,8 +14,8 @@ export ZSH=$HOME/.oh-my-zsh
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
-ZSH_THEME="spaceship"
-#ZSH_THEME="powerlevel10k/powerlevel10k"
+# ZSH_THEME="spaceship"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 ZSH_THEME_GIT_PROMPT_PREFIX=""
 ZSH_THEME_GIT_PROMPT_SUFFIX=""
@@ -47,19 +47,19 @@ RPROMPT='%F{060}${vcs_info_msg_0_}`git_prompt_status`'
 HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-DISABLE_AUTO_UPDATE="true"
+# DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to automatically update without prompting.
 # DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-export UPDATE_ZSH_DAYS=13
+# export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
-DISABLE_LS_COLORS="true"
+# DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
@@ -97,10 +97,8 @@ HIST_STAMPS="mm/dd/yyyy"
 plugins=(
 	git
 	sudo # Only for windows
-	history
 	zsh-autosuggestions
 	zsh-syntax-highlighting
-	history-substring-search
   z
 )
 

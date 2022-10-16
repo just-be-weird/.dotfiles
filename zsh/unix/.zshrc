@@ -14,8 +14,8 @@ export ZSH=$HOME/.oh-my-zsh
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
-ZSH_THEME="spaceship"
-#ZSH_THEME="powerlevel10k/powerlevel10k"
+# ZSH_THEME="spaceship"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 ZSH_THEME_GIT_PROMPT_PREFIX=""
 ZSH_THEME_GIT_PROMPT_SUFFIX=""
@@ -47,25 +47,25 @@ RPROMPT='%F{060}${vcs_info_msg_0_}`git_prompt_status`'
 HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-DISABLE_AUTO_UPDATE="true"
+# DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to automatically update without prompting.
 # DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-export UPDATE_ZSH_DAYS=13
+# export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
-DISABLE_LS_COLORS="true"
+# DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+# ENABLE_CORRECTION="false"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # You can also set it to another string to have that shown instead of the default red dots.
@@ -96,20 +96,12 @@ HIST_STAMPS="mm/dd/yyyy"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
 	git
-  git-extras
-	# sudo # Mac
-	history
 	zsh-autosuggestions
 	zsh-syntax-highlighting
-	history-substring-search
   z
 )
 
 source $ZSH/oh-my-zsh.sh
-
-# Keybindings for zsh-history-substring-search
-bindkey "^[[A" history-substring-search-up
-bindkey "^[[B" history-substring-search-down
 
 # Delete previous word with ctrl+backspace
 bindkey '^H' backward-kill-word    
@@ -161,14 +153,12 @@ setopt HIST_REDUCE_BLANKS
 setopt HIST_VERIFY
 setopt HIST_BEEP
 
-
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 # Example aliases
 source ~/.aliases
-
 
 # On-demand rehash
 zshcache_time="$(date +%s%N)"
@@ -190,13 +180,9 @@ add-zsh-hook -Uz precmd rehash_precmd
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-##### ONLY ON LINUX #####
 # Reloads the keyboard binding for backslash and capslock
 alias ckb='cp ~/Documents/dhk/.Xmodmap ~/ && xmodmap ~/.Xmodmap'
 alias uskb='cp ~/Documents/us/.Xmodmap ~/ && xmodmap ~/.Xmodmap'
-
-### Filemanager
-alias open='xdg-open'
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -204,3 +190,5 @@ export NVM_DIR="$HOME/.nvm"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# To customize prompt, run `p10k configure` or edit /tmp/abhishek-code-zsh/.p10k.zsh.
+[[ ! -f /tmp/abhishek-code-zsh/.p10k.zsh ]] || source /tmp/abhishek-code-zsh/.p10k.zsh
