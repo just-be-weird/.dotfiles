@@ -81,8 +81,13 @@ plugins=(
 	git
 	zsh-autosuggestions
 	zsh-syntax-highlighting
+  history-substring-search
   z
 )
+
+# Keybindings for zsh-history-substring-search
+bindkey "^[[A" history-substring-search-up
+bindkey "^[[B" history-substring-search-down
 
 source $ZSH/oh-my-zsh.sh
 
