@@ -1,3 +1,5 @@
+[credential]
+	helper = osxkeychain
 [user]
 	name = just-be-weird
-	email = abhi.chandresh@gmail.com
+	email = 17427511+just-be-weird@users.noreply.github.com
