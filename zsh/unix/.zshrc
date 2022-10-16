@@ -98,10 +98,15 @@ plugins=(
 	git
 	zsh-autosuggestions
 	zsh-syntax-highlighting
+	history-substring-search
   z
 )
 
 source $ZSH/oh-my-zsh.sh
+
+# Keybindings for zsh-history-substring-search
+bindkey "^[[A" history-substring-search-up
+bindkey "^[[B" history-substring-search-down
 
 # Delete previous word with ctrl+backspace
 bindkey '^H' backward-kill-word    

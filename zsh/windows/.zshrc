@@ -99,6 +99,7 @@ plugins=(
 	sudo # Only for windows
 	zsh-autosuggestions
 	zsh-syntax-highlighting
+	history-substring-search
   z
 )
 
