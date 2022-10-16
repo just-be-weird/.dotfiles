@@ -65,7 +65,7 @@ DISABLE_LS_COLORS="true"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="false"
+# ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # You can also set it to another string to have that shown instead of the default red dots.
@@ -96,8 +96,7 @@ HIST_STAMPS="mm/dd/yyyy"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
 	git
-	npm
-	sudo
+	sudo # Only for windows
 	history
 	zsh-autosuggestions
 	zsh-syntax-highlighting
@@ -189,12 +188,6 @@ add-zsh-hook -Uz precmd rehash_precmd
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-
-# Reloads the keyboard binding for backslash and capslock
-alias ckb='cp ~/Documents/dhk/.Xmodmap ~/ && xmodmap ~/.Xmodmap'
-alias uskb='cp ~/Documents/us/.Xmodmap ~/ && xmodmap ~/.Xmodmap'
-
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
