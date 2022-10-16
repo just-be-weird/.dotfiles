@@ -195,6 +195,8 @@ add-zsh-hook -Uz precmd rehash_precmd
 alias ckb='cp ~/Documents/dhk/.Xmodmap ~/ && xmodmap ~/.Xmodmap'
 alias uskb='cp ~/Documents/us/.Xmodmap ~/ && xmodmap ~/.Xmodmap'
 
+### Filemanager
+alias open='xdg-open'
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
