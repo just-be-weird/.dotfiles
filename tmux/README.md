@@ -52,7 +52,7 @@ You're good to go! The plugin was cloned to` ~/.tmux/plugins/` dir and sourced.
 
 All the plugins are installed to ~/.tmux/plugins/ so alternatively you can find plugin directory there and remove it.
 
-### [Final version of tmux config file](https://github.com/just-be-weird/.dotfiles/tree/mac/tmux)
+### [Final version of tmux config file](https://github.com/just-be-weird/.dotfiles/blob/mac/tmux/.tmux.conf)
 
 ---
 ## Panes in Tmux
