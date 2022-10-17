@@ -9,13 +9,13 @@ assignees: ''
 ---
 
 ---
-name: "\U0001F680 Feature request"
+name: "🚀 Feature request"
 about: Suggest an idea for this project
 
 ---
 
 <!--
-Thank you for suggesting an idea to make Node.js better.
+Thank you for suggesting an idea to make Dotfiles better.
 
 Please fill in as much of the template below as you're able.
 -->
