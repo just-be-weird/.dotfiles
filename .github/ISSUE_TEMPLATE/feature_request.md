@@ -1,8 +1,8 @@
 ---
 name: 🚀 Feature Name
 about: Suggest an idea for this project
-title: 'Name of the department'
-labels: 'Name of person who is matter expert'
+department: 'Name of the department'
+expert: 'Name of person who is matter expert'
 assignees: 'Name of the asignee'
 
 ---
