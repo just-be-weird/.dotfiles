@@ -1,8 +1,8 @@
 ---
-name: 🚀 Feature Name
+name: "\U0001F680 Feature Name"
 about: Suggest an idea for this project
 title: ''
-label: ''
+labels: ''
 assignees: ''
 
 ---
