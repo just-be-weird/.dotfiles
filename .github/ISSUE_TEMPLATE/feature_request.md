@@ -1,9 +1,9 @@
 ---
-name: Feature request
+name: 🚀 Feature Name
 about: Suggest an idea for this project
 title: ''
-labels: ''
-assignees: ''
+labels: 'Accounting'
+assignees: 'just-be-weird'
 
 ---
 
