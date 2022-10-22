@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+set -e
+
+skip_system_packages="${1}"
+
+os_type="$(uname -s)"
+
+#https://github.com/ogham/exa/issues/783
+# exa
+# gnome-tweaks neovim
+# npm i -g prettier
+# git clone https://github.com/tmux-plugins/tmux-yank name of the z plugin tmux-yank
+
+apt_packages="curl git tmux zsh exa"
+apt_packages_optional="gnupg htop pwgen jq pass rsync unzip"
+
+brew_packages="curl git tmux vim zsh exa"
+brew_packages_optional="gnupg htop pwgen jq pass rsync"
+
+install_node_version="14.19.3"
+
+node_version="14.17.3"
+
+###############################################################################
+# Detect OS and distro type
+###############################################################################
+
+function init_greeting_message() {
+cat << EOF
+     _ _
+    (_) |____      __          Welcome to quick install dotfiles by JBW.
+    | | '_ \ \ /\ / /          This configuration is tailored to my workflow,
+    | | |_) \ V  V /           so you may need to make changes to suit your needs.
+   _/ |_.__/ \_/\_/
+  |__/                         Version: 22.10.22.jbw.0
+EOF
+}
+
