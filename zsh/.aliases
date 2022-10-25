@@ -1,0 +1,103 @@
+# ------------------------------------------------------------------------------
+#     _ _             
+#    (_) |____      __          This file used to expose common alias aka system
+#    | | '_ \ \ /\ / /          wide shortcuts. Don't add the aliases anywhere -
+#    | | |_) \ V  V /           else.
+#   _/ |_.__/ \_/\_/            
+#  |__/                         Version: 25.10.22.jbw-l.0
+# ------------------------------------------------------------------------------
+
+##### Keyboard mapping #####
+## Toggle keyboard binding for backslash and capslock
+alias ckb='cp ~/Documents/dhk/.Xmodmap ~/ && xmodmap ~/.Xmodmap'
+alias uskb='cp ~/Documents/us/.Xmodmap ~/ && xmodmap ~/.Xmodmap'
+
+##### Package Updates #####
+alias upgrade='sudo apt upgrade'
+alias update='sudo apt update'
+alias install='sudo apt install'
+alias remove='sudo apt remove'
+alias autorm'sudo apt autoremove'
+
+##### Navigation #####
+alias open='xdg-open'
+# Prints directory name when changing directories
+function cs() {
+  cd "$@" && l
+}
+alias x='exit'
+alias ..='cs ..'
+alias ...='cs ../..'
+alias ....='cs ../../..'
+alias .....='cs ../../../..'
+alias ll='exa --icons -l --colour always'
+alias la='exa --icons -FBla --colour always'
+alias l='exa --icons --colour always'
+
+##### Shell #####
+# Refresh the shell context
+alias reload='source ~/.zshrc'
+
+##### Editor #####
+alias v="vim"
+alias n="vim"
+alias edt="code"
+alias edtalias="edt /home/abhishek/.aliases"
+## ZSH
+alias zshconf="nano ~/.zshrc"
+alias ohmyzsh="open ~/.oh-my-zsh"
+alias histf="nano ~/.cache/zsh/history"
+
+##### Services #####
+## Postgre DB Service
+alias pgst='sudo systemctl status postgresql'
+
+## Mongo DB Service
+#alias startmd='sudo service mongod start'
+#alias stopmd='sudo service mongod stop'
+#alias restartmd='sudo service mongod restart'
+
+##### Git simplified #####
+alias gst='git status'
+alias gco='git checkout'
+alias gci='git commit'
+alias grb='git rebase'
+alias gbr='git branch'
+alias gad='git add -A'
+alias gsl='git stash list'
+alias gsapl='git stash apply'
+alias gsd='git stash drop'
+alias gss='git stash save'
+alias gpl='git pull'
+alias gpo='git pull origin'
+alias gpm='git push origin master'
+alias glg='git log --date-order --all --graph --name-status --format="%C(green)%H%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
+
+##### Web Development #####
+## See globally installed packeages
+alias npm-ls='npm list -g --depth=0'
+# Codebase navigation
+alias fe='cd ~/Codebase/fe-core'
+alias be='cd ~/Codebase/be-core'
+
+##### Avy #####
+
+# To compile c files
+function runc() {
+  gcc "$@" - o test
+}
+
+# PYTHON
+alias jn='jupyter notebook'
+alias py='python3'
+
+alias mypy='currentPath=$PWD; $HOME ; source .mypy/bin/activate; cd $currentPath;echo "Python Virtual Environment ( .mypy/bin/activate ) is Activated.
+To Deactivate the Virtual Environment Type ~> deactivate"'
+
+#adb server
+sss() {
+  a=$(adb connect 192.168.1.101:5555)
+  notify-send "$a (RealMe C2)"
+  #   sleep 0.5
+  #   b=$(adb connect 192.168.1.102:5555);notify-send "$b (Redmi)"
+}
