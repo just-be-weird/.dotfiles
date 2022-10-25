@@ -40,7 +40,7 @@ alias reload='source ~/.zshrc'
 
 ##### Editor #####
 alias v="vim"
-alias n="vim"
+alias nv="nvim"
 alias edt="code"
 alias edtalias="edt /home/abhishek/.aliases"
 ## ZSH
