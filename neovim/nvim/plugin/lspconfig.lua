@@ -45,35 +45,45 @@ local on_attach = function(client, bufnr)
 
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    -- buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    -- buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    buf_set_keymap('n', 'gi', '<Cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    buf_set_keymap('n', '<C-k>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    buf_set_keymap('n', '<space>wa', '<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+    buf_set_keymap('n', '<space>wr', '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+    buf_set_keymap('n', '<space>wl',
+        '<Cmd>lua function() print(vim.inspect(vim.lsp.buf.list_workspace_folders()))end<CR>', opts)
+    buf_set_keymap('n', '<space>D', '<Cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    buf_set_keymap('n', '<space>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    buf_set_keymap('n', '<space>ca', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    buf_set_keymap('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<CR>', opts)
+    buf_set_keymap('n', '<space>f', '<Cmd>function()vim.lsp.buf.format {async = true}end<CR>', opts)
 end
 
-protocol.CompletionItemKind = {'', -- Text
-'', -- Method
+protocol.CompletionItemKind = {'', -- Text
+'', -- Method
 '', -- Function
-'', -- Constructor
+'', -- Constructor
 '', -- Field
-'', -- Variable
-'', -- Class
-'ﰮ', -- Interface
+'', -- Variable
+'ﴯ', -- Class
+'', -- Interface
 '', -- Module
-'', -- Property
+'ﰠ', -- Property
 '', -- Unit
 '', -- Value
-'', -- Enum
+'', -- Enum
 '', -- Keyword
 '﬌', -- Snippet
 '', -- Color
 '', -- File
-'', -- Reference
+'', -- Reference
 '', -- Folder
 '', -- EnumMember
 '', -- Constant
-'', -- Struct
+'פּ', -- Struct
 '', -- Event
-'ﬦ', -- Operator
+'', -- Operator
 '' -- TypeParameter
 }
 
@@ -99,11 +109,6 @@ nvim_lsp.sourcekit.setup {
 }
 
 -- Lua config
--- if vim.fn.has("unix") == 1 then
---     sumneko_root_path = "/home/" .. USER .. "/.config/nvim/lua-language-server"
---     sumneko_binary = "/home/" .. USER .. "/.config/nvim/lua-language-server/bin/lua-language-server"
--- end
-
 nvim_lsp.sumneko_lua.setup {
     settings = {
         capabilities = capabilities,

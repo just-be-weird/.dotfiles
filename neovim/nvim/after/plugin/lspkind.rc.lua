@@ -1,3 +1,5 @@
+-- This tiny plugin adds vscode-like pictograms 
+
 local status, lspkind = pcall(require, "lspkind")
 if (not status) then return end
 
