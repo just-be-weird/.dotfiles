@@ -2,6 +2,14 @@ vim.cmd("autocmd!")
 
 local opt = vim.opt
 
+-- [[ Global ]]
+
+-- LEADER
+-- These keybindings need to be defined before the first /
+-- is called; otherwise, it will default to "\"
+vim.g.mapleader = " "
+vim.g.localleader = "\\"
+
 -- [[ Context ]]
 opt.colorcolumn = '80'           -- str:  Show col for max line length
 opt.number = true                -- bool: Show line numbers
@@ -41,10 +49,8 @@ opt.showcmd = true
 opt.cmdheight = 1
 opt.laststatus = 2
 
--- opt.shell = 'fish'
 opt.backupskip = { '/tmp/*', '/private/tmp/*' }
 opt.inccommand = 'split'
-
 
 opt.wrap = false -- No Wrap lines
 opt.backspace = { 'start', 'eol', 'indent' }

@@ -9,7 +9,6 @@
 
 require('just-be-weird.base')
 require('just-be-weird.highlights')
-require('just-be-weird.global')           -- Global Settings
 require('just-be-weird.keymap')
 require('just-be-weird.plugins')
 require('just-be-weird.vars')             -- Variables
