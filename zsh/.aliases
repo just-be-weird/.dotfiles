@@ -9,8 +9,8 @@
 
 ##### Keyboard mapping #####
 ## Toggle keyboard binding for backslash and capslock
-alias ckb='cp ~/Documents/dhk/.Xmodmap ~/ && xmodmap ~/.Xmodmap'
-alias uskb='cp ~/Documents/us/.Xmodmap ~/ && xmodmap ~/.Xmodmap'
+alias skb='cp ~/Documents/dhk/.Xmodmap ~/ && xmodmap ~/.Xmodmap'
+# alias uskb='cp ~/Documents/us/.Xmodmap ~/ && xmodmap ~/.Xmodmap'
 
 ##### Package Updates #####
 alias upgrade='sudo apt upgrade'
