@@ -11,7 +11,7 @@ local opts = {
 keymap.set('i', ',<LEADER>', '<Esc>')
 
 -- Clear outs the search highlights
--- keymap.set('n', '<LEADER>nh', ':nohl<CR>')
+keymap.set('n', '<LEADER>nh', ':nohl<CR>')
 
 -- Do not yank with x
 keymap.set('n', 'x', '"_x')
@@ -64,7 +64,7 @@ keymap.set('n', 'tp', ':tabp<CR>') -- Go to prev tab
 keymap.set('n', 'sm', ':MaximizerToggle<CR>')
 
 -- nvim-tree (toggle file explorer)
-keymap.set('n', '<LEADER>e', ':NvimTreeToggle<CR>')
+-- keymap.set('n', '<LEADER>ex', ':NvimTreeToggle<CR>')
 
 ----------------------
 -- Diagnostic Override
