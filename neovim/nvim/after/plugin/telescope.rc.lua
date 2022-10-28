@@ -22,6 +22,8 @@ telescope.setup {
     extensions = {
         file_browser = {
             theme = 'dropdown',
+            dir_icon = "",
+            -- dir_icon_hl = "Row",
             -- disables netrw and use telescope-file-browser in its place
             hijack_netrw = true,
             mappings = {
@@ -44,7 +46,7 @@ telescope.setup {
     }
 }
 
--- telescope.load_extension('fzf')
+telescope.load_extension('fzf')
 telescope.load_extension('file_browser')
 
 vim.keymap.set('n', ';f', function()
@@ -72,7 +74,7 @@ vim.keymap.set('n', 'sf', function()
     telescope.extensions.file_browser.file_browser({
         path = '%:p:h',
         cwd = telescope_buffer_dir(),
-        respect_gitignore = false,
+        respect_gitignore = true,
         hidden = true,
         grouped = true,
         previewer = false,
