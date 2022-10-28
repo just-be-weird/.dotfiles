@@ -7,7 +7,7 @@ local opt = vim.opt
 -- LEADER
 -- These keybindings need to be defined before the first /
 -- is called; otherwise, it will default to "\"
-vim.g.mapleader = ","
+vim.g.mapleader = " "
 vim.g.localleader = "\\"
 
 -- [[ Context ]]
@@ -52,6 +52,7 @@ opt.laststatus = 2
 opt.backupskip = { '/tmp/*', '/private/tmp/*' }
 opt.inccommand = 'split'
 
+-- [[ Line Wrapping ]]
 opt.wrap = false -- No Wrap lines
 opt.backspace = { 'start', 'eol', 'indent' }
 opt.path:append { '**' } -- Finding files - Search down into subfolders
@@ -69,3 +70,4 @@ vim.cmd([[let &t_Ce = "\e[4:0m"]])
 
 -- Add asterisks in block comments
 opt.formatoptions:append { 'r' }
+

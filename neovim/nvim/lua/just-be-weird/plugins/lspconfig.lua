@@ -1,13 +1,25 @@
--- vim.lsp.set_log_level("debug")
-local status, nvim_lsp = pcall(require, "lspconfig")
+-- vim.lsp.set_log_level('debug')
+local status, nvim_lsp = pcall(require, 'lspconfig')
 
 if (not status) then
     return
 end
 
+-- import cmp-nvim-lsp plugin safely
+local cmp_nvim_lsp_status, cmp_nvim_lsp = pcall(require, 'cmp-nvim-lsp')
+if not cmp_nvim_lsp_status then
+    return
+end
+
+-- import typescript plugin safely
+local typescript_setup, typescript = pcall(require, 'typescript')
+if not typescript_setup then
+    return
+end
+
 local protocol = require('vim.lsp.protocol')
 
-local augroup_format = vim.api.nvim_create_augroup("Format", {
+local augroup_format = vim.api.nvim_create_augroup('Format', {
     clear = true
 })
 local enable_format_on_save = function(_, bufnr)
@@ -15,7 +27,7 @@ local enable_format_on_save = function(_, bufnr)
         group = augroup_format,
         buffer = bufnr
     })
-    vim.api.nvim_create_autocmd("BufWritePre", {
+    vim.api.nvim_create_autocmd('BufWritePre', {
         group = augroup_format,
         buffer = bufnr,
         callback = function()
@@ -40,24 +52,29 @@ local on_attach = function(client, bufnr)
     -- Mappings.
     local opts = {
         noremap = true,
-        silent = true
+        silent = true,
+        buffer = bufnr
     }
 
     -- See `:help vim.lsp.*` for documentation on any of the below functions
-    buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    buf_set_keymap('n', 'gi', '<Cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    buf_set_keymap('n', '<C-k>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    buf_set_keymap('n', '<space>wa', '<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-    buf_set_keymap('n', '<space>wr', '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-    buf_set_keymap('n', '<space>wl',
-        '<Cmd>lua function() print(vim.inspect(vim.lsp.buf.list_workspace_folders()))end<CR>', opts)
-    buf_set_keymap('n', '<space>D', '<Cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    buf_set_keymap('n', '<space>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    buf_set_keymap('n', '<space>ca', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    buf_set_keymap('n', '<leader>td', '<Cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+
     buf_set_keymap('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<CR>', opts)
-    buf_set_keymap('n', '<space>f', '<Cmd>function()vim.lsp.buf.format {async = true}end<CR>', opts)
+
+    buf_set_keymap('n', '<leader>f', '<Cmd>function()vim.lsp.buf.format {async = true}end<CR>', opts)
+
+    buf_set_keymap('n', '<leader>wa', '<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+
+    buf_set_keymap('n', '<leader>wr', '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+
+    buf_set_keymap('n', '<leader>wl',
+        '<Cmd>lua function() print(vim.inspect(vim.lsp.buf.list_workspace_folders()))end<CR>', opts)
+
+    if client.name == 'tsserver' then
+        buf_set_keymap.set('n', '<leader>rf', ':TypescriptRenameFile<CR>') -- rename file and update imports
+        buf_set_keymap.set('n', '<leader>oi', ':TypescriptOrganizeImports<CR>') -- organize imports (not in youtube nvim video)
+        buf_set_keymap.set('n', '<leader>ru', ':TypescriptRemoveUnused<CR>') -- remove unused variables (not in youtube nvim video)
+    end
 end
 
 protocol.CompletionItemKind = {'', -- Text
@@ -88,7 +105,7 @@ protocol.CompletionItemKind = {'', -- Text
 }
 
 -- Set up completion using nvim_cmp with LSP source
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = cmp_nvim_lsp.default_capabilities()
 
 nvim_lsp.flow.setup {
     on_attach = on_attach,
@@ -98,8 +115,8 @@ nvim_lsp.flow.setup {
 -- TypeScript config
 nvim_lsp.tsserver.setup {
     on_attach = on_attach,
-    filetypes = {"typescript", "typescriptreact", "typescript.tsx"},
-    cmd = {"typescript-language-server", "--stdio"},
+    filetypes = {'typescript', 'typescriptreact', 'typescript.tsx'},
+    cmd = {'typescript-language-server', '--stdio'},
     capabilities = capabilities
 }
 
@@ -112,10 +129,7 @@ nvim_lsp.sourcekit.setup {
 nvim_lsp.sumneko_lua.setup {
     settings = {
         capabilities = capabilities,
-        -- on_attach = function(client, bufnr)
-        --     on_attach(client, bufnr)
-        --     enable_format_on_save(client, bufnr)
-        -- end,
+        on_attach = on_attach,
         settings = {
             Lua = {
                 runtime = {
@@ -128,7 +142,11 @@ nvim_lsp.sumneko_lua.setup {
                 },
                 workspace = {
                     -- Make the server aware of Neovim runtime files
-                    library = vim.api.nvim_get_runtime_file("", true),
+                    -- library = vim.api.nvim_get_runtime_file('', true),
+                    library = {
+                        [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                        [vim.fn.stdpath("config") .. "/lua"] = true,
+                    },
                     checkThirdParty = false
                 },
                 -- Do not send telemetry data containing a randomized but unique identifier
@@ -139,6 +157,11 @@ nvim_lsp.sumneko_lua.setup {
             }
         }
     }
+}
+
+nvim_lsp.html.setup {
+    on_attach = on_attach,
+    capabilities = capabilities
 }
 
 nvim_lsp.tailwindcss.setup {
@@ -156,29 +179,29 @@ nvim_lsp.astro.setup {
     capabilities = capabilities
 }
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
     underline = true,
     update_in_insert = false,
     virtual_text = {
-        spacing = 4,
-        prefix = "●"
+        spacing = 2,
+        prefix = '●'
     },
     severity_sort = true
 })
 
 -- Diagnostic symbols in the sign column (gutter)
 local signs = {
-    Error = " ",
-    Warn = " ",
-    Hint = " ",
-    Info = " "
+    Error = ' ',
+    Warn = ' ',
+    Hint = ' ',
+    Info = ' '
 }
 for type, icon in pairs(signs) do
-    local hl = "DiagnosticSign" .. type
+    local hl = 'DiagnosticSign' .. type
     vim.fn.sign_define(hl, {
         text = icon,
         texthl = hl,
-        numhl = ""
+        numhl = ''
     })
 end
 
@@ -188,6 +211,7 @@ vim.diagnostic.config({
     },
     update_in_insert = true,
     float = {
-        source = "always" -- Or "if_many"
+        source = 'always' -- Or 'if_many'
     }
 })
+
