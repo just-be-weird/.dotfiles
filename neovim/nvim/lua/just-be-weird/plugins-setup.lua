@@ -1,25 +1,36 @@
-local status, packer = pcall(require, 'packer')
-
+-- auto install packer if not installed
 local ensure_packer = function()
     local fn = vim.fn
     local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
     if fn.empty(fn.glob(install_path)) > 0 then
         fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-        vim.cmd [[packadd packer.nvim]]
+        vim.cmd([[packadd packer.nvim]])
         return true
     end
     return false
 end
-local packer_bootstrap = ensure_packer()
+local packer_bootstrap = ensure_packer() -- true if packer was just installed
 
-if (not status) then
+-- autocommand that reloads neovim and installs/updates/removes plugins
+-- when file is saved
+vim.cmd([[ 
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins-setup.lua source <afile> | PackerSync
+  augroup end
+]])
+
+-- import packer safely
+local status, packer = pcall(require, 'packer')
+if not status then
     print('Packer is not installed')
     return
 end
 
-packer.startup(function(use)
+-- add list of plugins to install
+return packer.startup(function(use)
     -- packer can manage itself
-    use 'wbthomason/packer.nvim'
+    use('wbthomason/packer.nvim')
 
     ----------------------
     --  Plugins
@@ -39,100 +50,78 @@ packer.startup(function(use)
     -- Commenting with gc
     use 'numToStr/Comment.nvim'
 
-    -- Fuzzy finder
-    use 'nvim-telescope/telescope.nvim'
+    -- file explorer
+    -- use('nvim-tree/nvim-tree.lua')
 
-    -- File explorer
+    -- File icons (vs-code like icons)
+    use('kyazdani42/nvim-web-devicons')
+
+    -- statusline
+    use('nvim-lualine/lualine.nvim')
+    use 'akinsho/nvim-bufferline.lua'
+
+    -- fuzzy finding w/ telescope
     use 'nvim-telescope/telescope-file-browser.nvim'
-
-    -- File fuzzy finding w/ telescope (dependency for better sorting performance)
     -- use({
     --     'nvim-telescope/telescope-fzf-native.nvim',
     --     run = 'make'
-    -- })
+    -- }) -- dependency for better sorting performance
+    use({
+        'nvim-telescope/telescope.nvim',
+        branch = '0.1.x'
+    }) -- fuzzy finder
 
-    -- File icons (vs-code like icons)
-    use 'kyazdani42/nvim-web-devicons'
+    -- autocompletion
+    use('hrsh7th/nvim-cmp') -- completion plugin
+    use('hrsh7th/cmp-buffer') -- source for text in buffer
+    use('hrsh7th/cmp-path') -- source for file system paths
 
-    -- [[ Statusline ]]
-    use 'nvim-lualine/lualine.nvim'
-    use 'akinsho/nvim-bufferline.lua'
+    -- snippets
+    use('L3MON4D3/LuaSnip') -- snippet engine
+    use('saadparwaiz1/cmp_luasnip') -- for autocompletion
+    use('rafamadriz/friendly-snippets') -- useful snippets
 
-    -- [[ Autocompletion ]]
+    -- managing & installing lsp servers, linters & formatters
+    use('williamboman/mason.nvim') -- in charge of managing lsp servers, linters & formatters
+    use('williamboman/mason-lspconfig.nvim') -- bridges gap b/w mason & lspconfig
 
-    -- Completion plugin
-    use 'hrsh7th/nvim-cmp'
-    -- for autocompletion
-    use('saadparwaiz1/cmp_luasnip')
-    -- nvim-cmp source for text/words in buffer
-    use 'hrsh7th/cmp-buffer'
-
-    -- [[ Snippets ]]
-
-    -- snippet engine
-    use 'L3MON4D3/LuaSnip'
-    -- useful snippets
-    -- use 'rafamadriz/friendly-snippets'
-
-    -- [[ Managing & installing lsp servers, linters & formatters ]]
-
-    -- in charge of managing lsp servers, linters & formatters
-    use 'williamboman/mason.nvim'
-    -- bridges gap b/w mason & lspconfig
-    use 'williamboman/mason-lspconfig.nvim'
-
-    -- [[ Configuring lsp servers ]]
-
-    -- easily configure LSP language servers
-    use 'neovim/nvim-lspconfig'
-    -- nvim-cmp source for neovim's built-in LSP for Autocompletion
-    use 'hrsh7th/cmp-nvim-lsp'
-    -- enhanced lsp uis
+    -- configuring lsp servers
+    use('neovim/nvim-lspconfig') -- easily configure language servers
+    use('hrsh7th/cmp-nvim-lsp') -- for autocompletion
     use({
         'glepnir/lspsaga.nvim',
         branch = 'main'
-    })
-    -- additional functionality for typescript server (e.g. rename file & update imports)
-    use('jose-elias-alvarez/typescript.nvim')
-    -- vs-code like icons for autocompletion in pictograms
-    use 'onsails/lspkind-nvim'
+    }) -- enhanced lsp uis
+    use('jose-elias-alvarez/typescript.nvim') -- additional functionality for typescript server (e.g. rename file & update imports)
+    use('onsails/lspkind.nvim') -- vs-code like icons for autocompletion
 
-    -- [[ Formatting & linting ]]
+    -- formatting & linting
+    use('jose-elias-alvarez/null-ls.nvim') -- configure formatters & linters
+    use('jayp0521/mason-null-ls.nvim') -- bridges gap b/w mason & null-ls
 
-    -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua
-    use 'jose-elias-alvarez/null-ls.nvim'
-    -- Bridges gap b/w mason & null-ls
-    use 'jayp0521/mason-null-ls.nvim'
-
-    -- Treesitter configuration
-    use {
+    -- treesitter configuration
+    use({
         'nvim-treesitter/nvim-treesitter',
         run = function()
             require('nvim-treesitter.install').update({
                 with_sync = true
             })
         end
-    }
+    })
 
-    -- [[ Auto closing ]]
-
-    -- autoclose parens, brackets, quotes, etc...
-    use 'windwp/nvim-autopairs'
-    -- autoclose tags
+    -- auto closing
+    use('windwp/nvim-autopairs') -- autoclose parens, brackets, quotes, etc...
     use({
         'windwp/nvim-ts-autotag',
         after = 'nvim-treesitter'
-    })
+    }) -- autoclose tags
 
     -- [[ Colors ]]
     use 'norcalli/nvim-colorizer.lua'
 
-    -- [[ GIT integration ]]
-
-    -- Show line modifications on left hand side
-    use 'lewis6991/gitsigns.nvim'
-    -- For git blame & browse
-    use 'dinhhuy258/git.nvim'
+    -- git integration
+    use('lewis6991/gitsigns.nvim') -- show line modifications on left hand side
+    use 'dinhhuy258/git.nvim' -- For git blame & browse
 
     -- [[ Markdown support ]]
     use({

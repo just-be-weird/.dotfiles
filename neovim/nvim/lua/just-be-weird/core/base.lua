@@ -1,5 +1,3 @@
-vim.cmd("autocmd!")
-
 local opt = vim.opt
 
 -- [[ Global ]]
@@ -70,4 +68,3 @@ vim.cmd([[let &t_Ce = "\e[4:0m"]])
 
 -- Add asterisks in block comments
 opt.formatoptions:append { 'r' }
-
