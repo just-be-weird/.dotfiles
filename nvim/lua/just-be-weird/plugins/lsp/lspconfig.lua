@@ -96,8 +96,6 @@ lspconfig["html"].setup({
 typescript.setup({
     server = {
         capabilities = capabilities,
-        filetypes = {'typescript', 'typescriptreact', 'typescript.tsx'},
-        cmd = {'typescript-language-server', '--stdio'},
         on_attach = on_attach
     }
 })
