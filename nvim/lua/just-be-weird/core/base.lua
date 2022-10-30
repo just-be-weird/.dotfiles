@@ -8,6 +8,9 @@ local opt = vim.opt
 vim.g.mapleader = " "
 vim.g.localleader = "\\"
 
+opt.syntax = "ON"                -- str:  Allow syntax highlighting
+opt.termguicolors = true         -- bool: If term supports ui color then enable
+
 -- [[ Context ]]
 opt.colorcolumn = '80'           -- str:  Show col for max line length
 opt.number = true                -- bool: Show line numbers

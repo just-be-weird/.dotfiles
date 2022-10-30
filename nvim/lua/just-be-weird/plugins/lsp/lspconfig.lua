@@ -16,7 +16,7 @@ if not typescript_setup then
     return
 end
 
-local keymap = vim.keymap.set -- for conciseness
+local keymap = vim.keymap -- for conciseness
 
 -- enable keybinds only for when lsp server available
 local on_attach = function(client, bufnr)
@@ -28,24 +28,42 @@ local on_attach = function(client, bufnr)
     }
 
     -- set keybinds
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    keymap('n', '<leader>td', '<Cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    -- Lsp finder find the symbol definition implement reference
+    -- if there is no implement it will hide
+    -- when you use action in finder like open vsplit then you can
+    -- use <C-t> to jump
+    keymap.set("n", "gf", "<cmd>Lspsaga lsp_finder<CR>", opts) -- show definition, references
+    -- Peek Definition
+    -- you can edit the definition file in this flaotwindow
+    -- also support open/vsplit/etc operation check definition_action_keys
+    -- support tagstack C-t jump back
+    keymap.set('n', 'gd', "<cmd>Lspsaga peek_definition<CR>", opts)
+    keymap.set('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts) -- go to implementation
+    keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- see available code actions
+    keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- smart rename
+    keymap.set("n", "<leader>d", "<cmd>Lspsaga show_line_diagnostics<CR>", opts) -- show  diagnostics for line
+    keymap.set("n", "<leader>d", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts) -- show diagnostics for cursor
+    keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts) -- jump to previous diagnostic in buffer
+    keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts) -- jump to next diagnostic in buffer
+    keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- show documentation for what is under cursor
+    keymap.set("n", "<leader>o", "<cmd>LSoutlineToggle<CR>", opts) -- see outline on right hand side
 
-    keymap('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<CR>', opts)
+    keymap.set('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<CR>', opts)
 
-    keymap('n', '<leader>f', '<Cmd>function()vim.lsp.buf.format {async = true}end<CR>', opts)
+    keymap.set('n', '<leader>f', '<Cmd>function()vim.lsp.buf.format {async = true}end<CR>', opts)
 
-    keymap('n', '<leader>wa', '<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+    keymap.set('n', '<leader>wa', '<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
 
-    keymap('n', '<leader>wr', '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+    keymap.set('n', '<leader>wr', '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
 
-    keymap('n', '<leader>wl', '<Cmd>lua function() print(vim.inspect(vim.lsp.buf.list_workspace_folders()))end<CR>',
+    keymap.set('n', '<leader>wl', '<Cmd>lua function() print(vim.inspect(vim.lsp.buf.list_workspace_folders()))end<CR>',
         opts)
-
-    if client.name == 'tsserver' then
-        keymap('n', '<leader>rf', ':TypescriptRenameFile<CR>') -- rename file and update imports
-        keymap('n', '<leader>oi', ':TypescriptOrganizeImports<CR>') -- organize imports
-        keymap('n', '<leader>ru', ':TypescriptRemoveUnused<CR>') -- remove unused variables
+    -- typescript specific keymaps (e.g. rename file and update imports)
+    if client.name == "tsserver" then
+        keymap.set("n", "<leader>rf", ":TypescriptRenameFile<CR>") -- rename file and update imports
+        keymap.set("n", "<leader>oi", ":TypescriptOrganizeImports<CR>") -- organize imports
+        keymap.set("n", "<leader>ru", ":TypescriptRemoveUnused<CR>") -- remove unused variables
     end
 end
 
@@ -84,11 +102,6 @@ typescript.setup({
     }
 })
 
-lspconfig['flow'].setup {
-    on_attach = on_attach,
-    capabilities = capabilities
-}
-
 -- configure css server
 lspconfig["cssls"].setup({
     capabilities = capabilities,
@@ -101,32 +114,22 @@ lspconfig["tailwindcss"].setup({
     on_attach = on_attach
 })
 
-lspconfig.astro.setup {
-    on_attach = on_attach,
-    capabilities = capabilities
-}
-
 -- configure lua server (with special settings)
 lspconfig["sumneko_lua"].setup({
     capabilities = capabilities,
     on_attach = on_attach,
     settings = { -- custom settings for lua
         Lua = {
-            runtime = {
-                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                version = 'LuaJIT'
-            },
+            -- make the language server recognize "vim" global
             diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = {'vim'}
+                globals = {"vim"}
             },
             workspace = {
                 -- make language server aware of runtime files
                 library = {
                     [vim.fn.expand("$VIMRUNTIME/lua")] = true,
                     [vim.fn.stdpath("config") .. "/lua"] = true
-                },
-                checkThirdParty = false
+                }
             },
             -- Do not send telemetry data containing a randomized but unique identifier
             telemetry = {

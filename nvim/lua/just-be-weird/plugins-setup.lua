@@ -36,7 +36,7 @@ return packer.startup(function(use)
     ---------------------- 
     -- Common utilities/lua functions that many plugins use
     use 'nvim-lua/plenary.nvim'
-
+    
     use("bluz71/vim-nightfly-guicolors") -- preferred colorscheme
 
     use("christoomey/vim-tmux-navigator") -- tmux & split window navigation
@@ -46,16 +46,12 @@ return packer.startup(function(use)
     -- commenting with gc
     use("numToStr/Comment.nvim")
 
+    -- file explorer
+    -- use("nvim-tree/nvim-tree.lua")
+
     -- vs-code like icons
     use("kyazdani42/nvim-web-devicons")
 
-    -- file explorer
-    use {
-        'nvim-tree/nvim-tree.lua',
-        requires = {'nvim-tree/nvim-web-devicons' -- optional, for file icons
-        },
-        tag = 'nightly' -- optional, updated every week. (see issue #1193)
-    }
     -- statusline
     use("nvim-lualine/lualine.nvim")
     use 'akinsho/nvim-bufferline.lua'

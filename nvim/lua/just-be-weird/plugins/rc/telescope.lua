@@ -17,10 +17,10 @@ if not builtin_setup then
 end
 
 local function telescope_buffer_dir()
-	return vim.fn.expand('%:p:h')
-  end
-  
-  local fb_actions = require "telescope".extensions.file_browser.actions
+    return vim.fn.expand('%:p:h')
+end
+
+local fb_actions = require"telescope".extensions.file_browser.actions
 
 -- configure telescope
 telescope.setup({
@@ -40,7 +40,7 @@ telescope.setup({
     extensions = {
         file_browser = {
             theme = "dropdown",
-			dir_icon = "",
+            dir_icon = "",
             -- dir_icon_hl = "Row",
             -- disables netrw and use telescope-file-browser in its place
             hijack_netrw = true,
@@ -67,37 +67,38 @@ telescope.setup({
 telescope.load_extension("fzf")
 telescope.load_extension("file_browser")
 
-vim.keymap.set('n', ';f',
-  function()
+vim.keymap.set('n', ';f', function()
     builtin.find_files({
-      no_ignore = false,
-      hidden = true
+        no_ignore = false,
+        hidden = true
     })
-  end)
+end)
 vim.keymap.set('n', ';r', function()
-  builtin.live_grep()
+    builtin.live_grep()
 end)
 vim.keymap.set('n', '\\\\', function()
-  builtin.buffers()
+    builtin.buffers()
 end)
 vim.keymap.set('n', ';t', function()
-  builtin.help_tags()
+    builtin.help_tags()
 end)
 vim.keymap.set('n', ';;', function()
-  builtin.resume()
+    builtin.resume()
 end)
 vim.keymap.set('n', ';e', function()
-  builtin.diagnostics()
+    builtin.diagnostics()
 end)
 vim.keymap.set("n", "sf", function()
-  telescope.extensions.file_browser.file_browser({
-    path = "%:p:h",
-    cwd = telescope_buffer_dir(),
-    respect_gitignore = true,
-    hidden = true,
-    grouped = true,
-    previewer = false,
-    initial_mode = "normal",
-    layout_config = { height = 40 }
-  })
+    telescope.extensions.file_browser.file_browser({
+        path = "%:p:h",
+        cwd = telescope_buffer_dir(),
+        respect_gitignore = true,
+        hidden = true,
+        grouped = true,
+        previewer = false,
+        initial_mode = "normal",
+        layout_config = {
+            height = 40
+        }
+    })
 end)
