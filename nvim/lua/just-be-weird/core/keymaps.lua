@@ -64,7 +64,7 @@ keymap.set('n', 'tp', ':tabp<CR>') -- Go to prev tab
 keymap.set('n', 'sm', ':MaximizerToggle<CR>')
 
 -- nvim-tree (toggle file explorer)
--- keymap.set('n', '<LEADER>ex', ':NvimTreeToggle<CR>')
+keymap.set('n', '<LEADER>ex', ':NvimTreeToggle <CR>')
 
 ----------------------
 -- Diagnostic Override
